@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  role      String   @default("STAFF") // ADMIN, STAFF
+  createdAt DateTime @default(now())
+  logs          Log[]
+  notifications Notification[]
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  type      String   // Shipping Line, Forwarder...
+  services  String   // Ocean, Air... (stored as comma joined string for simple MVP)
+  whatsapp  String
+  email     String?
+  contact   String?  // Contact Person
+  routes    String?  // Description of routes
+  rating    Int      @default(0)
+  createdAt DateTime @default(now())
+  
+  rfqs      RFQ[]    @relation("TargetedCompanies") 
+  quotes    Quote[]
+  shipments     Shipment[]
+  quoteRequests QuoteRequest[]
+}
+
+model RFQ {
+  id              String    @id @default(cuid())
+  title           String
+  mode            String    // Ocean, Air
+  status          String    @default("DRAFT") // DRAFT, SENT, AWARDED, CLOSED
+  pol             String
+  pod             String
+  containerType   String?
+  containerCount  Int?
+  weight          Float?    // For LCL/Air
+  commodity       String
+  incoterm        String
+  freeDays        Int       @default(21)
+  targetDate      DateTime?
+  createdAt       DateTime  @default(now())
+  
+  targetCompanies Company[] @relation("TargetedCompanies")
+  quotes          Quote[]
+  shipment        Shipment?
+  quoteRequests   QuoteRequest[]
+}
+
+model Quote {
+  id        String   @id @default(cuid())
+  rfqId     String
+  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  price     Float
+  currency  String   @default("USD")
+  validity  DateTime?
+  notes     String?
+  freeDays  Int?
+  status    String   @default("RECEIVED") // RECEIVED, REJECTED, WINNER
+  createdAt DateTime @default(now())
+}
+
+model Shipment {
+  id        String   @id @default(cuid())
+  rfqId     String   @unique
+  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  companyId String?
+  company   Company? @relation(fields: [companyId], references: [id])
+  status    String   @default("BOOKED") // BOOKED, AT_SEA, ARRIVED, CLEARED, DELIVERED
+  bookingNo String?
+  blNo      String?
+  vessel    String?
+  etd       DateTime?
+  eta       DateTime?
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+}
+
+model QuoteRequest {
+  id        String   @id @default(cuid())
+  rfqId     String
+  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  token     String   @unique
+  status    String   @default("PENDING") // PENDING, VIEWED, SUBMITTED
+  createdAt DateTime @default(now())
+  
+  @@unique([rfqId, companyId])
+}
