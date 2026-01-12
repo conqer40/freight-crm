@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { addQuote, awardQuote } from '@/app/actions/rfq';
-import { Check, Plus, Trophy } from 'lucide-react';
+import { addQuote, awardQuote, deleteQuote } from '@/app/actions/rfq';
+import { Check, Plus, Trophy, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function QuotesList({ rfq, companies }: { rfq: any, companies: any[] }) {
@@ -50,6 +50,16 @@ export default function QuotesList({ rfq, companies }: { rfq: any, companies: an
                                             ترسية
                                         </button>
                                     )}
+                                    <button
+                                        onClick={async () => {
+                                            if (!confirm('هل أنت متأكد من حذف هذا العرض؟')) return;
+                                            await deleteQuote(quote.id);
+                                            toast.success('تم حذف العرض');
+                                        }}
+                                        className="text-xs bg-red-50 text-red-600 px-2 py-1 rounded hover:bg-red-100 mr-2"
+                                    >
+                                        <Trash2 size={14} />
+                                    </button>
                                 </td>
                             </tr>
                         ))}

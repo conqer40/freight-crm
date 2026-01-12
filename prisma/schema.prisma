@@ -70,9 +70,9 @@ model RFQ {
 model Quote {
   id        String   @id @default(cuid())
   rfqId     String
-  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  rfq       RFQ      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   price     Float
   currency  String   @default("USD")
   validity  DateTime?
@@ -85,9 +85,9 @@ model Quote {
 model Shipment {
   id        String   @id @default(cuid())
   rfqId     String   @unique
-  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  rfq       RFQ      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
   companyId String?
-  company   Company? @relation(fields: [companyId], references: [id])
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
   status    String   @default("BOOKED") // BOOKED, AT_SEA, ARRIVED, CLEARED, DELIVERED
   bookingNo String?
   blNo      String?
@@ -101,7 +101,7 @@ model Shipment {
 model Log {
   id        String   @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   action    String
   details   String?
   createdAt DateTime @default(now())
@@ -110,9 +110,9 @@ model Log {
 model QuoteRequest {
   id        String   @id @default(cuid())
   rfqId     String
-  rfq       RFQ      @relation(fields: [rfqId], references: [id])
+  rfq       RFQ      @relation(fields: [rfqId], references: [id], onDelete: Cascade)
   companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   token     String   @unique
   status    String   @default("PENDING") // PENDING, VIEWED, SUBMITTED
   createdAt DateTime @default(now())

@@ -2,6 +2,7 @@ import prisma from '@/lib/prisma';
 import { Ship, Eye, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import ShipmentActions from '@/components/shipment/ShipmentActions';
 
 export default async function ShipmentsPage() {
     const shipments = await prisma.shipment.findMany({
@@ -69,6 +70,7 @@ export default async function ShipmentsPage() {
                                     <Link href={`/shipments/${shipment.id}`} className="text-gray-400 hover:text-blue-600 transition">
                                         <Eye size={20} />
                                     </Link>
+                                    <ShipmentActions id={shipment.id} />
                                 </td>
                             </tr>
                         ))}

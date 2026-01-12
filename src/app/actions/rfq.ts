@@ -125,6 +125,7 @@ export async function awardQuote(quoteId: string, rfqId: string) {
             }
         });
 
+
         revalidatePath(`/rfqs/${rfqId}`);
         redirect('/shipments'); // Redirect to shipments to see the result
     } catch (e) {
@@ -132,3 +133,17 @@ export async function awardQuote(quoteId: string, rfqId: string) {
         return { message: 'Error' };
     }
 }
+
+export async function deleteQuote(quoteId: string) {
+    try {
+        const quote = await prisma.quote.findUnique({ where: { id: quoteId } });
+        if (!quote) return;
+
+        await prisma.quote.delete({ where: { id: quoteId } });
+        revalidatePath(`/rfqs/${quote.rfqId}`);
+    } catch (e) {
+        console.error('Delete Quote Error:', e);
+    }
+}
+
+

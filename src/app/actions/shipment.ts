@@ -33,7 +33,16 @@ export async function updateShipment(prevState: any, formData: FormData) {
         revalidatePath('/shipments');
         return { message: 'تم تحديث الشحنة بنجاح', success: true };
     } catch (e: any) {
-        console.error(e);
+        console.error('Update Shipment Error:', e);
         return { message: `خطأ: ${e.message}`, success: false };
+    }
+}
+
+export async function deleteShipment(id: string) {
+    try {
+        await prisma.shipment.delete({ where: { id } });
+        revalidatePath('/shipments');
+    } catch (e) {
+        console.error('Delete Shipment Error:', e);
     }
 }
