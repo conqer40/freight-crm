@@ -12,6 +12,12 @@ export async function updateShipment(prevState: any, formData: FormData) {
     const acidNumber = formData.get('acidNumber') as string;
     const shippingLine = formData.get('shippingLine') as string;
     const vessel = formData.get('vessel') as string;
+
+    // New Parties
+    const supplierId = formData.get('supplierId') as string || null;
+    const importerId = formData.get('importerId') as string || null;
+    const factoryId = formData.get('factoryId') as string || null;
+
     const notes = formData.get('notes') as string;
     const etdStr = formData.get('etd') as string;
     const etaStr = formData.get('eta') as string;
@@ -27,6 +33,9 @@ export async function updateShipment(prevState: any, formData: FormData) {
                 acidNumber,
                 shippingLine,
                 vessel,
+                supplierId, // New
+                importerId, // New
+                factoryId,  // New
                 notes,
                 etd: etdStr ? new Date(etdStr) : null,
                 eta: etaStr ? new Date(etaStr) : null,

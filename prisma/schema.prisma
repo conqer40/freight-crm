@@ -43,6 +43,11 @@ model Company {
   quotes    Quote[]
   shipments     Shipment[]
   quoteRequests QuoteRequest[]
+  
+  // Inverse relations for Shipment Roles
+  shipmentsAsSupplier Shipment[] @relation("ShipmentSupplier")
+  shipmentsAsImporter Shipment[] @relation("ShipmentImporter")
+  shipmentsAsFactory  Shipment[] @relation("ShipmentFactory")
 }
 
 model RFQ {
@@ -96,6 +101,15 @@ model Shipment {
   shippingLine String? // The Carrier (e.g., Maersk, MSC)
   trackingData String? // JSON string for simulated tracking history
   vessel    String?
+  
+  // Business Parties (Coding)
+  supplierId String?
+  supplier   Company? @relation("ShipmentSupplier", fields: [supplierId], references: [id])
+  importerId String?
+  importer   Company? @relation("ShipmentImporter", fields: [importerId], references: [id])
+  factoryId  String?
+  factory    Company? @relation("ShipmentFactory", fields: [factoryId], references: [id])
+  
   etd       DateTime?
   eta       DateTime?
   notes     String?

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Save, User, Shield, Anchor, Database, Bell } from 'lucide-react';
+import { Save, User, Shield, Anchor, Database, Bell, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import { toast } from 'sonner';
 
 export default function SettingsPage() {
@@ -24,7 +25,37 @@ export default function SettingsPage() {
 
                 {/* Content Area */}
                 <div className="flex-1 bg-white p-6 rounded-xl border shadow-sm min-h-[500px]">
-                    {activeTab === 'general' && <GeneralSettings />}
+                    {activeTab === 'general' && (
+                        <div className="space-y-6">
+                            {/* Business Partners Management Shortcut */}
+                            <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="p-3 rounded-lg bg-blue-500/10 text-blue-400">
+                                        <User size={24} />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-white">Business Partners (تكويد الشركاء)</h3>
+                                        <p className="text-sm text-slate-400">Manage Factories, Suppliers, and Importers</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <Link href="/companies/create?type=SUPPLIER" className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition">
+                                        <span className="text-slate-200">Add New Supplier (مورد)</span>
+                                        <ArrowRight size={16} className="text-slate-400" />
+                                    </Link>
+                                    <Link href="/companies/create?type=FACTORY" className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition">
+                                        <span className="text-slate-200">Add New Factory (مصنع)</span>
+                                        <ArrowRight size={16} className="text-slate-400" />
+                                    </Link>
+                                    <Link href="/companies/create?type=IMPORTER" className="flex items-center justify-between p-3 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition">
+                                        <span className="text-slate-200">Add New Importer (مستورد)</span>
+                                        <ArrowRight size={16} className="text-slate-400" />
+                                    </Link>
+                                </div>
+                            </div>
+                            <GeneralSettings />
+                        </div>
+                    )}
                     {activeTab === 'users' && <UsersSettings />}
                     {activeTab === 'ports' && <PortsSettings />}
                     {activeTab === 'notifications' && <NotificationsSettings />}
