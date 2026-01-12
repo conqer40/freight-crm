@@ -10,6 +10,7 @@ export async function updateShipment(prevState: any, formData: FormData) {
     const bookingNo = formData.get('bookingNo') as string;
     const blNo = formData.get('blNo') as string;
     const acidNumber = formData.get('acidNumber') as string;
+    const shippingLine = formData.get('shippingLine') as string;
     const vessel = formData.get('vessel') as string;
     const notes = formData.get('notes') as string;
     const etdStr = formData.get('etd') as string;
@@ -24,6 +25,7 @@ export async function updateShipment(prevState: any, formData: FormData) {
                 bookingNo,
                 blNo,
                 acidNumber,
+                shippingLine,
                 vessel,
                 notes,
                 etd: etdStr ? new Date(etdStr) : null,

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ShipmentActions from '@/components/shipment/ShipmentActions';
+import TrackingTimeline from '@/components/shipment/TrackingTimeline';
 
 export default async function ShipmentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -79,6 +80,9 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                     </div>
                 )}
             </div>
+
+            {/* Auto-Tracking Timeline */}
+            <TrackingTimeline status={shipment.status} shippingLine={shipment.shippingLine} />
 
             <ShipmentEditForm shipment={shipment} companies={companies} />
         </div>

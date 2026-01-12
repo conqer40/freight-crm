@@ -93,6 +93,8 @@ model Shipment {
   bookingNo String?
   blNo      String?
   acidNumber String?  // ACID Number
+  shippingLine String? // The Carrier (e.g., Maersk, MSC)
+  trackingData String? // JSON string for simulated tracking history
   vessel    String?
   etd       DateTime?
   eta       DateTime?
