@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl">
       <body
-        className={`${cairo.variable} font-sans antialiased bg-gray-50`}
+        className={`${cairo.variable} font-sans antialiased`}
       >
         <ClientProviders>
           {children}
