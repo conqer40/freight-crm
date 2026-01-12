@@ -6,8 +6,20 @@ import DashboardCharts from '../dashboard/Charts';
 import WorldMap from '../dashboard/WorldMap';
 import RatePredictor from '../dashboard/RatePredictor';
 
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 export default function DashboardView({ stats }: { stats: any }) {
     const { t } = useLanguage();
+    const router = useRouter();
+
+    // Auto-refresh data every 10 seconds to keep dashboard live
+    useEffect(() => {
+        const interval = setInterval(() => {
+            router.refresh();
+        }, 10000);
+        return () => clearInterval(interval);
+    }, [router]);
 
     const cards = [
         { title: t.companies, value: stats.companiesCount, icon: Building2, color: 'from-blue-500 to-blue-600', shadow: 'shadow-blue-500/20' },
@@ -42,7 +54,7 @@ export default function DashboardView({ stats }: { stats: any }) {
 
             {/* AI Rate Predictor (Full Width) */}
             <div className="animate-in fade-in slide-in-from-bottom duration-700 delay-200">
-                <RatePredictor />
+                <RatePredictor historicalRates={stats.historicalRates} />
             </div>
 
             {/* Interactive Charts Section */}

@@ -4,18 +4,26 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { TrendingDown, TrendingUp, AlertTriangle, Sparkles, BrainCircuit } from 'lucide-react';
 import { useState } from 'react';
 
-const data = [
-    { name: 'Week 1', rate: 2400 },
-    { name: 'Week 2', rate: 2350 },
-    { name: 'Week 3', rate: 2500 },
-    { name: 'Week 4', rate: 2800 },
-    { name: 'Current', rate: 2900 },
-    { name: 'Forecast 1', rate: 2700, prediction: true },
-    { name: 'Forecast 2', rate: 2500, prediction: true },
-    { name: 'Forecast 3', rate: 2300, prediction: true },
-];
 
-export default function RatePredictor() {
+
+export default function RatePredictor({ historicalRates }: { historicalRates?: any[] }) {
+    const defaultData = [
+        { name: 'Week 1', rate: 2400 },
+        { name: 'Week 2', rate: 2350 },
+        { name: 'Week 3', rate: 2500 },
+        { name: 'Current', rate: 2900 },
+    ];
+
+    // Combine real data with AI projection if available, otherwise use default
+    const displayData = historicalRates && historicalRates.length > 0
+        ? [
+            ...historicalRates,
+            // Projected future (mocked AI logic based on last trend)
+            { name: 'Next Week', rate: historicalRates[historicalRates.length - 1].rate * 0.95, prediction: true },
+            { name: 'Week +2', rate: historicalRates[historicalRates.length - 1].rate * 0.92, prediction: true }
+        ]
+        : defaultData;
+
     const [route, setRoute] = useState('Shanghai -> Sokhna');
 
     return (
@@ -68,7 +76,7 @@ export default function RatePredictor() {
 
             <div className="h-[300px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={data}>
+                    <AreaChart data={displayData}>
                         <defs>
                             <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
