@@ -50,7 +50,10 @@ export default function DashboardView({ stats, historicalRates }: DashboardViewP
                             </span>
                         </div>
                     </div>
-                    <button className="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl transition-all border border-white/20">
+                    <button
+                        onClick={() => document.getElementById('rate-predictor')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl transition-all border border-white/20 cursor-pointer active:scale-95"
+                    >
                         <TrendingUp size={16} />
                         <span>AI Market: Bullish 🚀</span>
                     </button>
@@ -58,7 +61,7 @@ export default function DashboardView({ stats, historicalRates }: DashboardViewP
             </div>
 
             {/* AI Rate Predictor (Full Width) */}
-            <div className="animate-in fade-in slide-in-from-bottom duration-700 delay-200">
+            <div id="rate-predictor" className="animate-in fade-in slide-in-from-bottom duration-700 delay-200">
                 <RatePredictor historicalRates={historicalRates} />
             </div>
 
