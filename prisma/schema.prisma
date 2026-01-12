@@ -92,6 +92,7 @@ model Shipment {
   status    String   @default("BOOKED") // BOOKED, AT_SEA, ARRIVED, CLEARED, DELIVERED
   bookingNo String?
   blNo      String?
+  acidNumber String?  // ACID Number
   vessel    String?
   etd       DateTime?
   eta       DateTime?

@@ -70,9 +70,14 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                     <span className="font-bold text-lg">{shipment.rfq.pol} ➝ {shipment.rfq.pod}</span>
                 </div>
                 <div>
-                    <span className="block text-blue-400 text-xs uppercase mb-1">البضاعة Commodity</span>
                     <span className="font-bold text-lg">{shipment.rfq.commodity}</span>
                 </div>
+                {shipment.acidNumber && (
+                    <div className="animate-in fade-in slide-in-from-right duration-700">
+                        <span className="block text-green-400 text-xs uppercase mb-1">ACID Number 🛡️</span>
+                        <span className="font-mono font-bold text-lg text-white bg-white/10 px-2 py-0.5 rounded">{shipment.acidNumber}</span>
+                    </div>
+                )}
             </div>
 
             <ShipmentEditForm shipment={shipment} companies={companies} />

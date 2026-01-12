@@ -57,9 +57,16 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
                         <input name="bookingNo" type="text" defaultValue={shipment.bookingNo || ''} className="w-full border p-2.5 rounded-lg" />
                     </div>
 
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">MBL / HBL No.</label>
                         <input name="blNo" type="text" defaultValue={shipment.blNo || ''} className="w-full border p-2.5 rounded-lg" placeholder="رقم البوليصة" />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">ACID Number</label>
+                        <input name="acidNumber" type="text" defaultValue={shipment.acidNumber || ''} className="w-full border p-2.5 rounded-lg border-green-500/30 bg-green-500/5 focus:ring-green-500" placeholder="رقم ACID الاجباري" />
+                        <p className="text-[10px] text-green-600 mt-1">خاص بمنظومة الجمارك المصرية (ACI)</p>
                     </div>
 
                     <div>

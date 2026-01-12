@@ -15,18 +15,39 @@ export default function DashboardView({ stats }: { stats: any }) {
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{t.welcome} 👋</h2>
-                    <p className="text-gray-500 mt-2 text-lg">{t.overview}</p>
+            {/* Deployment Debug & Welcome */}
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 text-white shadow-lg animate-in fade-in slide-in-from-top duration-1000">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h2 className="text-3xl font-bold tracking-tight mb-2">{t.welcome} 👋</h2>
+                        <p className="text-emerald-100 text-lg opacity-90">{t.overview}</p>
+                        <div className="mt-4 flex items-center gap-3">
+                            <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-mono backdrop-blur-sm">
+                                System Status: Operational 🟢
+                            </span>
+                            <span className="text-sm font-mono opacity-75">
+                                Last Update: {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                        </div>
+                    </div>
+                    <button className="hidden md:flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl transition-all border border-white/20">
+                        <TrendingUp size={16} />
+                        <span>AI Market: Bullish 🚀</span>
+                    </button>
                 </div>
-                <button className="hidden md:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/20 transition-all border border-purple-400/30">
-                    <TrendingUp size={16} />
-                    <span>AI Insights: Bullish Market 🚀</span>
-                </button>
-                <div className="hidden md:flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/10">
-                    <Clock size={16} />
-                    <span>{new Date().toLocaleDateString('en-GB')}</span>
+            </div>
+
+            {/* Interactive Charts Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 glass-card p-4 min-h-[400px]">
+                    <h3 className="text-xl font-bold text-white mb-4 px-2">Shipment Analytics 📊</h3>
+                    <DashboardCharts />
+                </div>
+                <div className="glass-card p-4 min-h-[400px]">
+                    <h3 className="text-xl font-bold text-white mb-4 px-2">Live Tracking 🌍</h3>
+                    <div className="h-[350px] rounded-xl overflow-hidden border border-slate-700/50">
+                        <WorldMap />
+                    </div>
                 </div>
             </div>
 
