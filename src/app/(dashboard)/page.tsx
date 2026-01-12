@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 
     // Fetch Historical Rates for AI Predictor
     const rawQuotes = await prisma.quote.findMany({
-        where: { createdAt: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) } }, // Last 90 days
+        where: { createdAt: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) } }, // Fetch Last 90 days for AI
         select: {
             price: true,
             createdAt: true,
