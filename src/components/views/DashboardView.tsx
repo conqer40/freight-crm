@@ -4,6 +4,7 @@ import { useLanguage } from '@/lib/i18n';
 import { Building2, FileText, BadgeDollarSign, Ship, Clock, TrendingUp, AlertCircle, ArrowUpRight } from 'lucide-react';
 import DashboardCharts from '../dashboard/Charts';
 import WorldMap from '../dashboard/WorldMap';
+import RatePredictor from '../dashboard/RatePredictor';
 
 export default function DashboardView({ stats }: { stats: any }) {
     const { t } = useLanguage();
@@ -37,6 +38,11 @@ export default function DashboardView({ stats }: { stats: any }) {
                         <span>AI Market: Bullish 🚀</span>
                     </button>
                 </div>
+            </div>
+
+            {/* AI Rate Predictor (Full Width) */}
+            <div className="animate-in fade-in slide-in-from-bottom duration-700 delay-200">
+                <RatePredictor />
             </div>
 
             {/* Interactive Charts Section */}
