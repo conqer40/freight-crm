@@ -35,7 +35,7 @@ export default async function DashboardPage() {
 
     const historicalRates = rawQuotes.map(q => ({
         date: q.createdAt.toISOString().split('T')[0],
-        price: q.price,
+        rate: q.price,
         route: `${q.rfq.pol} -> ${q.rfq.pod}`,
         mode: q.rfq.mode
     }));
