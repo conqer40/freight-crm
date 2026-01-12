@@ -29,6 +29,11 @@ export default function QuoteSubmissionForm({ token }: { token: string }) {
                 </div>
 
                 <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Transit Time (مدة الرحلة)</label>
+                    <input name="transitTime" type="text" placeholder="مثال: 25 يوم" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+                </div>
+
+                <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">Free Days (أيام السماح)</label>
                     <input name="freeDays" type="number" defaultValue="21" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
                 </div>

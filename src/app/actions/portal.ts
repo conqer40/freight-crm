@@ -42,6 +42,8 @@ export async function submitPublicQuote(token: string, prevState: any, formData:
     const validityStr = formData.get('validity') as string;
     const validity = validityStr ? new Date(validityStr) : null;
 
+    const transitTime = formData.get('transitTime') as string;
+
     if (!price) return { message: 'Price is required' };
 
     try {
@@ -60,6 +62,7 @@ export async function submitPublicQuote(token: string, prevState: any, formData:
                 price,
                 currency,
                 freeDays,
+                transitTime,
                 notes,
                 validity,
                 status: 'RECEIVED'

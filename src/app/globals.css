@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: "Cairo", "Inter", system-ui, sans-serif;
   --background: #f8fafc;
   --foreground: #0f172a;
 
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
 }
 
 body {
   font-family: var(--font-sans);
-  background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+  background: radial-gradient(circle at 50% 10%, #eff6ff, #dbeafe, #eff6ff);
   min-height: 100vh;
   color: var(--foreground);
 }
 
 @layer components {
 
-  /* Glassmorphism Utilities */
+  /* Premium Glassmorphism */
   .glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
   }
@@ -35,21 +35,22 @@ body {
   }
 
   .glass-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px 0 rgba(31, 38, 135, 0.15);
+    background: rgba(255, 255, 255, 0.75);
   }
 
   /* Premium Table Styles */
   .premium-table thead {
-    @apply bg-gray-50/50 text-gray-600 font-semibold uppercase text-xs tracking-wider;
+    @apply bg-blue-50/50 text-slate-700 font-bold uppercase text-xs tracking-wider border-b border-blue-100;
   }
 
   .premium-table tbody tr {
-    @apply transition-colors duration-200 hover:bg-white/50;
+    @apply transition-colors duration-200 hover:bg-blue-50/30;
   }
 
   .premium-table td {
-    @apply py-4 px-6 border-b border-gray-100/50;
+    @apply py-4 px-6 border-b border-slate-100/60 text-slate-600 font-medium;
   }
 
   /* Typography Polish */
@@ -59,28 +60,32 @@ body {
   h4,
   h5,
   h6 {
-    @apply tracking-tight font-bold text-slate-800;
+    @apply tracking-tight font-extrabold text-slate-900;
+  }
+
+  label {
+    @apply font-bold text-slate-700;
   }
 
   /* Button Gradients */
   .btn-primary {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    @apply text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 border-0;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    @apply text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 border-0 active:scale-[0.98];
   }
 
   .btn-secondary {
-    @apply bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm;
+    @apply bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm font-semibold;
   }
 
   .btn-danger {
-    @apply bg-red-50 text-red-600 hover:bg-red-100 transition-colors;
+    @apply bg-red-50 text-red-600 hover:bg-red-100 transition-colors font-medium;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -89,9 +94,11 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background-color: #94a3b8;
 }

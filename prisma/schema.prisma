@@ -78,6 +78,7 @@ model Quote {
   validity  DateTime?
   notes     String?
   freeDays  Int?
+  transitTime String?
   status    String   @default("RECEIVED") // RECEIVED, REJECTED, WINNER
   createdAt DateTime @default(now())
 }
