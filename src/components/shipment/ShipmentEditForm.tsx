@@ -73,39 +73,83 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
                         <label className="block text-sm font-medium text-gray-700 mb-1">Vessel / Flight</label>
                         <input name="vessel" type="text" defaultValue={shipment.vessel || ''} className="w-full border p-2.5 rounded-lg" placeholder="اسم السفينة أو رقم الرحلة" />
                     </div>
+
+                    <div className="md:col-span-2 border-t pt-4 mt-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            Shipping Line (الخط الملاحي) -
+                            <span className="text-xs text-blue-500 font-normal">Required for Auto-Tracking 📡</span>
+                        </label>
+                        <select name="shippingLine" defaultValue={shipment.shippingLine || ''} className="w-full input-primary bg-slate-800 focus:bg-slate-700">
+                            <option value="">-- اختر الخط الملاحي --</option>
+                            <option value="MAERSK">Maersk</option>
+                            <option value="MSC">MSC</option>
+                            <option value="CMA CGM">CMA CGM</option>
+                            <option value="COSCO">COSCO</option>
+                            <option value="HAPAG LLOYD">Hapag-Lloyd</option>
+                            <option value="EVERGREEN">Evergreen</option>
+                            <option value="ONE">ONE</option>
+                            <option value="YANG MING">Yang Ming</option>
+                            <option value="PIL">PIL</option>
+                            <option value="ZIM">ZIM</option>
+                        </select>
+                    </div>
+
+                    <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4 border-t pt-4">
+                        <div>
+                            <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Supplier (المورد)</label>
+                            <select name="supplierId" defaultValue={shipment.supplierId || ''} className="w-full text-sm border p-2 rounded-lg">
+                                <option value="">-- Select Supplier --</option>
+                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Factory (المصنع)</label>
+                            <select name="factoryId" defaultValue={shipment.factoryId || ''} className="w-full text-sm border p-2 rounded-lg">
+                                <option value="">-- Select Factory --</option>
+                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Importer (المستورد)</label>
+                            <select name="importerId" defaultValue={shipment.importerId || ''} className="w-full text-sm border p-2 rounded-lg">
+                                <option value="">-- Select Importer --</option>
+                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Dates & Notes */}
+                    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+                        <h3 className="font-semibold text-gray-900 border-b pb-2">التواريخ والملاحظات</h3>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">ETD (تاريخ المغادرة)</label>
+                            <input name="etd" type="date" defaultValue={shipment.etd ? new Date(shipment.etd).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">ETA (تاريخ الوصول)</label>
+                            <input name="eta" type="date" defaultValue={shipment.eta ? new Date(shipment.eta).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Notes (ملاحظات)</label>
+                            <textarea name="notes" rows={4} defaultValue={shipment.notes || ''} className="w-full border p-2.5 rounded-lg"></textarea>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Dates & Notes */}
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
-                    <h3 className="font-semibold text-gray-900 border-b pb-2">التواريخ والملاحظات</h3>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">ETD (تاريخ المغادرة)</label>
-                        <input name="etd" type="date" defaultValue={shipment.etd ? new Date(shipment.etd).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">ETA (تاريخ الوصول)</label>
-                        <input name="eta" type="date" defaultValue={shipment.eta ? new Date(shipment.eta).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Notes (ملاحظات)</label>
-                        <textarea name="notes" rows={4} defaultValue={shipment.notes || ''} className="w-full border p-2.5 rounded-lg"></textarea>
-                    </div>
+                <div className="flex justify-end pt-4">
+                    <button
+                        type="submit"
+                        disabled={isPending}
+                        className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                    >
+                        {isPending ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                        <span>حفظ التعديلات</span>
+                    </button>
                 </div>
-            </div>
-
-            <div className="flex justify-end pt-4">
-                <button
-                    type="submit"
-                    disabled={isPending}
-                    className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50"
-                >
-                    {isPending ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                    <span>حفظ التعديلات</span>
-                </button>
-            </div>
         </form>
     )
 }
