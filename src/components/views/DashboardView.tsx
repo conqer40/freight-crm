@@ -20,10 +20,14 @@ export default function DashboardView({ stats }: { stats: any }) {
                     <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{t.welcome} 👋</h2>
                     <p className="text-gray-500 mt-2 text-lg">{t.overview}</p>
                 </div>
-                <button className="hidden md:flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/10">
+                <button className="hidden md:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/20 transition-all border border-purple-400/30">
+                    <TrendingUp size={16} />
+                    <span>AI Insights: Bullish Market 🚀</span>
+                </button>
+                <div className="hidden md:flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/10">
                     <Clock size={16} />
                     <span>{new Date().toLocaleDateString('en-GB')}</span>
-                </button>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

@@ -87,10 +87,10 @@ export default function Sidebar() {
                                 <User size={18} className="text-slate-300" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-bold text-white truncate">مدير النظام</p>
+                                <p className="text-sm font-bold text-white truncate">Elhawy Admin</p>
                                 <p className="text-[10px] text-emerald-400 flex items-center gap-1">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    متصل الآن
+                                    v2.0 Royal Edition
                                 </p>
                             </div>
                             <Settings size={18} className="text-slate-500 group-hover:text-white transition-colors" />
