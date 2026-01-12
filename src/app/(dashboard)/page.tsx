@@ -15,5 +15,30 @@ async function getStats() {
 
 export default async function DashboardPage() {
     const stats = await getStats();
-    return <DashboardView stats={stats} />;
+
+    // Fetch Historical Rates for AI Predictor
+    const rawQuotes = await prisma.quote.findMany({
+        where: { createdAt: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) } }, // Last 90 days
+        select: {
+            amount: true,
+            createdAt: true,
+            rfq: {
+                select: {
+                    pol: true,
+                    pod: true,
+                    mode: true
+                }
+            }
+        },
+        orderBy: { createdAt: 'asc' }
+    });
+
+    const historicalRates = rawQuotes.map(q => ({
+        date: q.createdAt.toISOString().split('T')[0],
+        price: q.amount,
+        route: `${q.rfq.pol} -> ${q.rfq.pod}`,
+        mode: q.rfq.mode
+    }));
+
+    return <DashboardView stats={stats} historicalRates={historicalRates} />;
 }

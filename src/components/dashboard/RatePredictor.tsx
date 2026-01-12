@@ -1,112 +1,168 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
-import { TrendingDown, TrendingUp, AlertTriangle, Sparkles, BrainCircuit } from 'lucide-react';
-import { useState } from 'react';
+import { TrendingUp, TrendingDown, AlertCircle, Calendar, Filter, Zap } from 'lucide-react';
 
+interface RateData {
+    date: string;
+    price: number;
+    route: string;
+    mode: string;
+}
 
+export default function RatePredictor({ historicalRates }: { historicalRates: RateData[] }) {
+    const [selectedRoute, setSelectedRoute] = useState<string>('All');
+    const [showForecast, setShowForecast] = useState(false);
 
-export default function RatePredictor({ historicalRates }: { historicalRates?: any[] }) {
-    const defaultData = [
-        { name: 'Week 1', rate: 2400 },
-        { name: 'Week 2', rate: 2350 },
-        { name: 'Week 3', rate: 2500 },
-        { name: 'Current', rate: 2900 },
-    ];
+    // 1. Extract Unique Routes
+    const uniqueRoutes = useMemo(() => {
+        const routes = new Set(historicalRates.map(r => r.route));
+        return ['All', ...Array.from(routes)];
+    }, [historicalRates]);
 
-    // Combine real data with AI projection if available, otherwise use default
-    const displayData = historicalRates && historicalRates.length > 0
-        ? [
-            ...historicalRates,
-            // Projected future (mocked AI logic based on last trend)
-            { name: 'Next Week', rate: historicalRates[historicalRates.length - 1].rate * 0.95, prediction: true },
-            { name: 'Week +2', rate: historicalRates[historicalRates.length - 1].rate * 0.92, prediction: true }
-        ]
-        : defaultData;
+    // 2. Filter & Aggregate Data
+    const chartData = useMemo(() => {
+        let filtered = historicalRates;
+        if (selectedRoute !== 'All') {
+            filtered = historicalRates.filter(r => r.route === selectedRoute);
+        }
 
-    const [route, setRoute] = useState('Shanghai -> Sokhna');
+        // Group by Date (Average price per day)
+        const grouped: Record<string, { date: string, price: number, count: number }> = {};
+        filtered.forEach(r => {
+            if (!grouped[r.date]) {
+                grouped[r.date] = { date: r.date, price: 0, count: 0 };
+            }
+            grouped[r.date].price += r.price;
+            grouped[r.date].count += 1;
+        });
+
+        const data = Object.values(grouped).map(g => ({
+            date: g.date.slice(5), // MM-DD
+            price: Math.round(g.price / g.count),
+            market: Math.round((g.price / g.count) * (1 + (Math.random() * 0.1 - 0.05))) // Simulated Market Index +/- 5%
+        })).sort((a, b) => a.date.localeCompare(b.date));
+
+        // Generate Forecast if enabled
+        if (showForecast && data.length > 0) {
+            const lastPrice = data[data.length - 1].price;
+            const trend = lastPrice > data[0]?.price ? 1 : -1;
+
+            for (let i = 1; i <= 5; i++) {
+                data.push({
+                    date: `Future +${i}`,
+                    price: Math.round(lastPrice * (1 + (i * 0.02 * trend))),
+                    market: Math.round(lastPrice * (1 + (i * 0.02 * trend)) * 1.05)
+                });
+            }
+        }
+
+        return data; // Return empty if no data, handled in UI
+    }, [historicalRates, selectedRoute, showForecast]);
+
+    // 3. Analysis Text
+    const currentTrend = chartData.length > 1 && chartData[chartData.length - 1].price < chartData[chartData.length - 2].price ? 'down' : 'up';
+    const advice = currentTrend === 'down'
+        ? "Rates are dropping! Wait a few days to book."
+        : "Rates are spikng! Book immediately to lock price.";
 
     return (
-        <div className="glass-card p-6 relative overflow-hidden group">
-            {/* AI Badge */}
-            <div className="absolute top-0 left-0 bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white px-3 py-1 rounded-br-xl text-xs font-bold flex items-center gap-1 z-10 shadow-lg shadow-purple-500/20">
-                <BrainCircuit size={14} />
-                Elhawy AI Core
+        <div className="glass-card p-6 h-full flex flex-col relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                <TrendingUp size={100} className="text-emerald-500" />
             </div>
 
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 mt-4">
-                <div>
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        بورصة الشحن (AI Rate Predictor) 📉
-                    </h3>
-                    <p className="text-slate-400 text-xs mt-1">توقعات الأسعار للأسبوع القادم بناءً على تحليل السوق</p>
-                </div>
-
-                <div className="flex bg-slate-800/50 rounded-lg p-1 border border-white/5 mt-2 md:mt-0">
-                    <button
-                        onClick={() => setRoute('Shanghai -> Sokhna')}
-                        className={`px-3 py-1 text-xs rounded transition-all ${route === 'Shanghai -> Sokhna' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
-                    >
-                        Shanghai ➝ Sokhna
-                    </button>
-                    <button
-                        onClick={() => setRoute('Ningbo -> Alexa')}
-                        className={`px-3 py-1 text-xs rounded transition-all ${route === 'Ningbo -> Alexa' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}
-                    >
-                        Ningbo ➝ Alexa
-                    </button>
-                </div>
-            </div>
-
-            {/* Recommendation Card */}
-            <div className="flex items-center gap-4 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 p-4 rounded-xl mb-6 backdrop-blur-sm">
-                <div className="bg-emerald-500/20 p-3 rounded-full animate-pulse">
-                    <TrendingDown size={24} className="text-emerald-400" />
-                </div>
-                <div>
-                    <div className="flex items-center gap-2">
-                        <span className="text-emerald-400 font-bold text-lg">نوصي بالانتظار! (Wait)</span>
-                        <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full">High Confidence 94%</span>
+            <div className="flex items-center justify-between mb-6 z-10">
+                <div className="flex items-center gap-3">
+                    <div className="p-3 rounded-lg bg-emerald-500/20 text-emerald-400">
+                        <Zap size={24} />
                     </div>
-                    <p className="text-slate-300 text-sm mt-1">
-                        الذكاء الاصطناعي يتوقع <span className="text-white font-bold">انخفاض</span> الأسعار بقيمة <span className="text-white font-bold">$600</span> خلال 10 أيام. لا تحجز الآن.
-                    </p>
+                    <div>
+                        <h2 className="text-xl font-bold text-white">AI Rate Predictor ⚡</h2>
+                        <p className="text-xs text-slate-400">Freight Market Intelligence</p>
+                    </div>
+                </div>
+
+                <div className="flex bg-slate-800 rounded-lg p-1">
+                    <button
+                        onClick={() => setShowForecast(false)}
+                        className={`px-3 py-1 text-xs rounded-md transition ${!showForecast ? 'bg-slate-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                    >
+                        History
+                    </button>
+                    <button
+                        onClick={() => setShowForecast(true)}
+                        className={`px-3 py-1 text-xs rounded-md transition ${showForecast ? 'bg-purple-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                    >
+                        Forecast 🔮
+                    </button>
                 </div>
             </div>
 
-            <div className="h-[300px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={displayData}>
-                        <defs>
-                            <linearGradient id="colorRate" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                                <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
-                            </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                        <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} />
-                        <YAxis stroke="#94a3b8" fontSize={11} domain={[2000, 3200]} />
-                        <Tooltip
-                            contentStyle={{ backgroundColor: '#1e293b', borderColor: '#475569', color: '#fff' }}
-                            itemStyle={{ color: '#c084fc' }}
-                        />
-                        <ReferenceLine x="Current" stroke="#ef4444" strokeDasharray="3 3" label={{ position: 'top', value: 'Now', fill: 'red', fontSize: 10 }} />
-                        <Area
-                            type="monotone"
-                            dataKey="rate"
-                            stroke="#8b5cf6"
-                            strokeWidth={3}
-                            fillOpacity={1}
-                            fill="url(#colorRate)"
-                        />
-                    </AreaChart>
-                </ResponsiveContainer>
+            {/* Filters */}
+            <div className="flex items-center gap-3 mb-4 z-10">
+                <Filter size={14} className="text-slate-500" />
+                <select
+                    value={selectedRoute}
+                    onChange={e => setSelectedRoute(e.target.value)}
+                    className="bg-slate-800 text-white text-xs border border-slate-700 rounded px-2 py-1 outline-none focus:border-blue-500"
+                >
+                    {uniqueRoutes.map(r => <option key={r} value={r}>{r}</option>)}
+                </select>
+
+                {chartData.length > 0 && (
+                    <span className={`text-xs px-2 py-0.5 rounded ml-auto flex items-center gap-1 ${currentTrend === 'down' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                        {currentTrend === 'down' ? <TrendingDown size={12} /> : <TrendingUp size={12} />}
+                        {currentTrend === 'down' ? 'Market Cooling' : 'Market Heating'}
+                    </span>
+                )}
             </div>
 
-            <p className="text-right text-[10px] text-slate-500 mt-2 flex items-center justify-end gap-1">
-                <Sparkles size={10} />
-                Powered by Elhawy Deep Learning Model v1.0
-            </p>
+            {/* Chart */}
+            <div className="flex-1 min-h-[200px] w-full z-10">
+                {chartData.length > 0 ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                        <AreaChart data={chartData}>
+                            <defs>
+                                <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                                </linearGradient>
+                                <linearGradient id="colorMarket" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.1} />
+                                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.5} />
+                            <XAxis dataKey="date" stroke="#94a3b8" tick={{ fontSize: 10 }} />
+                            <YAxis stroke="#94a3b8" tick={{ fontSize: 10 }} width={30} />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#fff' }}
+                                itemStyle={{ color: '#fff' }}
+                            />
+                            <Area type="monotone" dataKey="price" stroke="#10b981" strokeWidth={3} fillUrl="#colorPrice" name="My Rates" />
+                            {showForecast && <Area type="monotone" dataKey="market" stroke="#818cf8" strokeWidth={2} strokeDasharray="5 5" fillUrl="#colorMarket" name="Predicted Market" />}
+                        </AreaChart>
+                    </ResponsiveContainer>
+                ) : (
+                    <div className="h-full flex flex-col items-center justify-center text-slate-500 gap-2">
+                        <AlertCircle size={32} />
+                        <p className="text-sm">Not enough data to predict yet.</p>
+                        <p className="text-xs">Add more quotes to unlock AI insights.</p>
+                    </div>
+                )}
+            </div>
+
+            {/* AI Advice */}
+            {chartData.length > 0 && (
+                <div className="mt-4 p-3 bg-gradient-to-r from-blue-900/40 to-purple-900/40 border border-blue-500/30 rounded-lg z-10">
+                    <h4 className="text-xs font-bold text-blue-300 uppercase mb-1 flex items-center gap-1">
+                        <Zap size={10} /> AI Recommendation
+                    </h4>
+                    <p className="text-sm text-white font-medium italic">"{advice}"</p>
+                </div>
+            )}
         </div>
     );
 }
