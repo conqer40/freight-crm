@@ -27,12 +27,12 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Operational Info */}
-                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+                <div className="glass-card p-6 space-y-4">
                     <h3 className="font-semibold text-gray-900 border-b pb-2">بيانات التشغيل</h3>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Company (شركة الشحن)</label>
-                        <select name="companyId" defaultValue={shipment.companyId || ''} className="w-full border p-2.5 rounded-lg bg-gray-50 focus:bg-white transition">
+                        <select name="companyId" defaultValue={shipment.companyId || ''} className="w-full input-primary bg-slate-800 focus:bg-slate-700">
                             <option value="">-- اختر شركة الشحن --</option>
                             {companies.map(c => (
                                 <option key={c.id} value={c.id}>{c.name} ({c.type})</option>
@@ -43,7 +43,7 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Status (الحالة)</label>
-                        <select name="status" defaultValue={shipment.status} className="w-full border p-2.5 rounded-lg bg-gray-50 focus:bg-white transition">
+                        <select name="status" defaultValue={shipment.status} className="w-full input-primary bg-slate-800 focus:bg-slate-700">
                             <option value="BOOKED">BOOKED (تم الحجز)</option>
                             <option value="AT_SEA">AT SEA (في البحر / الجو)</option>
                             <option value="ARRIVED">ARRIVED (وصلت)</option>

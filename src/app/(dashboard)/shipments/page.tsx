@@ -16,8 +16,8 @@ export default async function ShipmentsPage() {
                 <h2 className="text-2xl font-bold text-gray-800">الشحنات (Shipments)</h2>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <table className="w-full text-right">
+            <div className="glass-card overflow-hidden">
+                <table className="premium-table text-right">
                     <thead className="bg-gray-50 text-gray-500 text-sm">
                         <tr>
                             <th className="p-4 font-medium">Ref No.</th>

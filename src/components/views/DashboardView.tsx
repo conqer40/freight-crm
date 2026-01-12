@@ -2,6 +2,8 @@
 
 import { useLanguage } from '@/lib/i18n';
 import { Building2, FileText, BadgeDollarSign, Ship, Clock, TrendingUp, AlertCircle, ArrowUpRight } from 'lucide-react';
+import DashboardCharts from '../dashboard/Charts';
+import WorldMap from '../dashboard/WorldMap';
 
 export default function DashboardView({ stats }: { stats: any }) {
     const { t } = useLanguage();
