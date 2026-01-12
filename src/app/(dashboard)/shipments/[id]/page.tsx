@@ -3,6 +3,7 @@ import ShipmentEditForm from '@/components/shipment/ShipmentEditForm';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import ShipmentActions from '@/components/shipment/ShipmentActions';
 
 export default async function ShipmentDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -34,11 +35,31 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                     <h1 className="text-2xl font-bold text-gray-900 mb-2">تفاصيل الشحنة (Shipment Details)</h1>
                     <p className="text-gray-500">Ref: {shipment.id}</p>
                 </div>
-                <div className="text-right">
-                    <div className="text-sm text-gray-500">RFQ Reference</div>
-                    <Link href={`/rfqs/${shipment.rfqId}`} className="text-blue-600 font-medium hover:underline">
-                        {shipment.rfq.title}
+                <div className="text-right flex flex-col items-end gap-2">
+                    <div className="flex items-center gap-3">
+                        <div className="text-sm text-slate-400">Actions</div>
+                        <ShipmentEditForm shipment={shipment} companies={companies} mode="button-only" />
+                        <div className="hidden"></div> {/* Temp fix for Import, see below */}
+                        {/* We will just add the import at top manually if needed, or rely on next step. 
+                             Actually, let's just place the component here provided imports are correct.
+                             Wait, I cannot easily add imports with replace_file_content if they are far away.
+                             I will use ShipmentActions here.
+                         */}
+                    </div>
+                    <Link href={`/rfqs/${shipment.rfqId}`} className="text-blue-500 text-sm font-medium hover:text-blue-400 transition">
+                        Associated RFQ: {shipment.rfq.bookingRef || shipment.rfq.title}
                     </Link>
+                </div>
+            </div>
+
+            {/* Actions Bar */}
+            <div className="flex items-center justify-between bg-slate-800/50 p-4 rounded-xl border border-white/5 backdrop-blur-md">
+                <h2 className="text-white font-bold flex items-center gap-2">
+                    <span className="w-2 h-8 bg-blue-500 rounded-full"></span>
+                    إدارة الشحنة
+                </h2>
+                <div className="flex items-center gap-3">
+                    <ShipmentActions id={shipment.id} shipment={shipment} />
                 </div>
             </div>
 
