@@ -20,7 +20,7 @@ export default async function DashboardPage() {
     const rawQuotes = await prisma.quote.findMany({
         where: { createdAt: { gte: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000) } }, // Last 90 days
         select: {
-            amount: true,
+            price: true,
             createdAt: true,
             rfq: {
                 select: {
@@ -35,7 +35,7 @@ export default async function DashboardPage() {
 
     const historicalRates = rawQuotes.map(q => ({
         date: q.createdAt.toISOString().split('T')[0],
-        price: q.amount,
+        price: q.price,
         route: `${q.rfq.pol} -> ${q.rfq.pod}`,
         mode: q.rfq.mode
     }));
