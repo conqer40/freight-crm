@@ -11,7 +11,13 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
 
     const shipment = await prisma.shipment.findUnique({
         where: { id },
-        include: { rfq: true, company: true }
+        include: {
+            rfq: true,
+            company: true,
+            supplier: true,
+            importer: true,
+            factory: true
+        }
     });
 
     if (!shipment) notFound();
