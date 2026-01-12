@@ -9,7 +9,12 @@ import RatePredictor from '../dashboard/RatePredictor';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function DashboardView({ stats }: { stats: any }) {
+interface DashboardViewProps {
+    stats: any;
+    historicalRates: any[];
+}
+
+export default function DashboardView({ stats, historicalRates }: DashboardViewProps) {
     const { t } = useLanguage();
     const router = useRouter();
 
@@ -54,7 +59,7 @@ export default function DashboardView({ stats }: { stats: any }) {
 
             {/* AI Rate Predictor (Full Width) */}
             <div className="animate-in fade-in slide-in-from-bottom duration-700 delay-200">
-                <RatePredictor historicalRates={stats.historicalRates} />
+                <RatePredictor historicalRates={historicalRates} />
             </div>
 
             {/* Interactive Charts Section */}

@@ -3,7 +3,20 @@
 import { CheckCircle2, Circle, Truck, Ship, Anchor, PackageCheck } from 'lucide-react';
 
 export default function TrackingTimeline({ status, shippingLine }: { status: string, shippingLine?: string | null }) {
-    if (!shippingLine) return null;
+    // If no shipping line, show a placeholder
+    if (!shippingLine) {
+        return (
+            <div className="glass-card p-6 mb-6 border-l-4 border-slate-600 bg-slate-800/50">
+                <div className="flex items-center gap-3 opacity-50">
+                    <div className="p-2 bg-slate-700 rounded-full"><Anchor size={20} /></div>
+                    <div>
+                        <h3 className="font-bold text-white">Tracking Unavailable</h3>
+                        <p className="text-xs text-slate-400">Please select a Shipping Line to enable Auto-Tracking.</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // Simulate tracking steps based on shipment status
     const steps = [
@@ -40,8 +53,8 @@ export default function TrackingTimeline({ status, shippingLine }: { status: str
                     <div key={step.id} className="relative pl-8">
                         {/* Dot */}
                         <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 transition-all duration-500 ${step.status === 'completed' ? 'bg-emerald-500 border-emerald-500' :
-                                step.status === 'current' ? 'bg-blue-500 border-blue-500 animate-ping' :
-                                    'bg-slate-900 border-slate-600'
+                            step.status === 'current' ? 'bg-blue-500 border-blue-500 animate-ping' :
+                                'bg-slate-900 border-slate-600'
                             }`}></div>
 
                         <div className={`transition-all duration-500 ${step.status === 'upcoming' ? 'opacity-50' : 'opacity-100'}`}>
