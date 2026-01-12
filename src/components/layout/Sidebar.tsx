@@ -91,7 +91,7 @@ export default function Sidebar() {
                                 <p className="text-sm font-bold text-white truncate">Elhawy Admin</p>
                                 <p className="text-[10px] text-emerald-400 flex items-center gap-1">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    v2.5 (Live Fixed) 🟢
+                                    v2.6 (Live 01:15 AM) 🟢
                                 </p>
                             </div>
                             <Settings size={18} className="text-slate-500 group-hover:text-white transition-colors" />
