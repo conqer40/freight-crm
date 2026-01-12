@@ -24,7 +24,7 @@ export async function getOrCreateQuoteLink(rfqId: string, companyId: string) {
 
         // Return the full URL (adjusted for dev/prod environment)
         // Ideally use process.env.NEXT_PUBLIC_APP_URL, defaulting to localhost for now
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://freight-crm-one.vercel.app';
         return { success: true, url: `${baseUrl}/p/${request.token}` };
     } catch (e: any) {
         console.error('Error generating link:', e);

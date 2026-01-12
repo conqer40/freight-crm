@@ -1,80 +1,25 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-  --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+:root {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --background: #f8fafc;
+  --foreground: #0f172a;
 
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-
-  --radius: 0.75rem;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-@layer base {
-  :root {
-    --background: #f8fafc;
-    /* Soft Blue-ish Gray */
-    --foreground: #0f172a;
-    /* Deep Navy */
+body {
+  font-family: var(--font-sans);
+  background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+  min-height: 100vh;
+  color: var(--foreground);
+}
 
-    --card: #ffffff;
-    --card-foreground: #0f172a;
-
-    --popover: #ffffff;
-    --popover-foreground: #0f172a;
-
-    --primary: #2563eb;
-    /* Vibrant Blue */
-    --primary-foreground: #f8fafc;
-
-    --secondary: #f1f5f9;
-    --secondary-foreground: #0f172a;
-
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
-
-    --accent: #f1f5f9;
-    --font-sans: "Inter", system-ui, sans-serif;
-    --color-primary: #2563eb;
-    --color-secondary: #0f172a;
-  }
-
-  :root {
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.5);
-    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  }
-
-  body {
-    font-family: var(--font-sans);
-    background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-    min-height: 100vh;
-    color: #1e293b;
-  }
+@layer components {
 
   /* Glassmorphism Utilities */
   .glass {
@@ -107,25 +52,6 @@
     @apply py-4 px-6 border-b border-gray-100/50;
   }
 
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-  }
-
   /* Typography Polish */
   h1,
   h2,
@@ -149,3 +75,23 @@
   .btn-danger {
     @apply bg-red-50 text-red-600 hover:bg-red-100 transition-colors;
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
