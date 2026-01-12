@@ -35,11 +35,20 @@ export default function QuotesList({ rfq, companies }: { rfq: any, companies: an
                                 </td>
                                 <td className="p-3">
                                     {rfq.status !== 'AWARDED' && (
-                                        <form action={async (formData: FormData) => { await awardQuote(quote.id, rfq.id); }}>
-                                            <button className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200">
-                                                ترسية
-                                            </button>
-                                        </form>
+                                        <button
+                                            onClick={async () => {
+                                                const promise = awardQuote(quote.id, rfq.id);
+                                                toast.promise(promise, {
+                                                    loading: 'جاري الترسية...',
+                                                    success: 'تمت الترسية بنجاح!',
+                                                    error: 'حدث خطأ'
+                                                });
+                                                await promise;
+                                            }}
+                                            className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200"
+                                        >
+                                            ترسية
+                                        </button>
                                     )}
                                 </td>
                             </tr>
