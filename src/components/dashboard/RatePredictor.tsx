@@ -141,8 +141,8 @@ export default function RatePredictor({ historicalRates }: { historicalRates: Ra
                                 contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', color: '#fff' }}
                                 itemStyle={{ color: '#fff' }}
                             />
-                            <Area type="monotone" dataKey="price" stroke="#10b981" strokeWidth={3} fillUrl="#colorPrice" name="My Rates" />
-                            {showForecast && <Area type="monotone" dataKey="market" stroke="#818cf8" strokeWidth={2} strokeDasharray="5 5" fillUrl="#colorMarket" name="Predicted Market" />}
+                            <Area type="monotone" dataKey="price" stroke="#10b981" strokeWidth={3} fill="url(#colorPrice)" name="My Rates" />
+                            {showForecast && <Area type="monotone" dataKey="market" stroke="#818cf8" strokeWidth={2} strokeDasharray="5 5" fill="url(#colorMarket)" name="Predicted Market" />}
                         </AreaChart>
                     </ResponsiveContainer>
                 ) : (
