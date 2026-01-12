@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Ship, FileText, BadgeDollarSign, Building2, BarChart3, Settings, User, LogOut, BoxSelect } from 'lucide-react';
+import { LayoutDashboard, Ship, FileText, BadgeDollarSign, Building2, BarChart3, Settings, User, LogOut, BoxSelect, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/lib/i18n';
 
@@ -14,6 +14,7 @@ const linkKeys = [
     { href: '/shipments', key: 'shipments', icon: Ship },
     { href: '/reports', key: 'reports', icon: BarChart3 },
     { href: '/users', key: 'users', icon: User },
+    { href: '/partners', key: 'partners', icon: Users }, // New Partners Section
     { href: '/settings', key: 'settings', icon: Settings },
     { href: '/tools/cargo-planner', key: 'cargo_planner', icon: BoxSelect },
 ];
