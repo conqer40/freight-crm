@@ -8,13 +8,14 @@
   /* Deep Ocean Palette */
   --background: #0f172a;
   /* Slate 900 */
-  --foreground: #f8fafc;
-  /* Slate 50 */
+  /* Slate 900 */
+  --foreground: #ffffff;
+  /* Pure White for Max Contrast */
 
-  --card: rgba(30, 41, 59, 0.7);
-  /* Slate 800 with opacity */
-  --card-border: rgba(148, 163, 184, 0.1);
-  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --card: rgba(15, 23, 42, 0.85);
+  /* Darker & More Opaque for Readability */
+  --card-border: rgba(255, 255, 255, 0.15);
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 
   --primary: #3b82f6;
   /* Blue 500 */
@@ -104,7 +105,7 @@ body {
   p,
   span,
   div {
-    @apply text-slate-300;
+    @apply text-slate-200;
   }
 
   /* Inputs */

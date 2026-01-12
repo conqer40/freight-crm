@@ -36,7 +36,7 @@ export default function Sidebar() {
                             <Ship size={28} className="text-white fill-white/20" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold tracking-tight text-white leading-tight">Freight<span className="text-blue-400">CRM</span></h1>
+                            <h1 className="text-xl font-bold tracking-tight text-white leading-tight">Elhawy<span className="text-blue-400">Freight</span></h1>
                             <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold opacity-70">Logistics OS</p>
                         </div>
                     </div>

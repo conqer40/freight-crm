@@ -11,8 +11,8 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "نظام إدارة عروض الشحن",
-  description: "Freight RFQ & CRM System",
+  title: "Elhawy Freight - Logistics OS",
+  description: "Advanced Freight Management System",
 };
 
 export default function RootLayout({

@@ -38,7 +38,8 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                 <div className="text-right flex flex-col items-end gap-2">
                     <div className="flex items-center gap-3">
                         <div className="text-sm text-slate-400">Actions</div>
-                        <ShipmentEditForm shipment={shipment} companies={companies} mode="button-only" />
+                        <div className="text-sm text-slate-400">Actions</div>
+                        {/* Edit Link is below */}
                         <div className="hidden"></div> {/* Temp fix for Import, see below */}
                         {/* We will just add the import at top manually if needed, or rely on next step. 
                              Actually, let's just place the component here provided imports are correct.
@@ -47,7 +48,7 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                          */}
                     </div>
                     <Link href={`/rfqs/${shipment.rfqId}`} className="text-blue-500 text-sm font-medium hover:text-blue-400 transition">
-                        Associated RFQ: {shipment.rfq.bookingRef || shipment.rfq.title}
+                        Associated RFQ: {shipment.rfq.title}
                     </Link>
                 </div>
             </div>
