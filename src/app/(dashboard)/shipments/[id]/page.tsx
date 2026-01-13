@@ -87,6 +87,53 @@ export default async function ShipmentDetailsPage({ params }: { params: Promise<
                 )}
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5 backdrop-blur-md">
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="p-1.5 bg-blue-500/20 rounded-lg text-blue-400">🏭</span>
+                        <h3 className="text-slate-300 text-xs font-bold uppercase">Source Factory</h3>
+                    </div>
+                    {shipment.factory ? (
+                        <div>
+                            <p className="text-white font-medium">{shipment.factory.name}</p>
+                            <p className="text-xs text-slate-500">{shipment.factory.contact || 'No contact info'}</p>
+                        </div>
+                    ) : (
+                        <p className="text-slate-600 text-sm italic">Not Assigned</p>
+                    )}
+                </div>
+
+                <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5 backdrop-blur-md">
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="p-1.5 bg-orange-500/20 rounded-lg text-orange-400">📦</span>
+                        <h3 className="text-slate-300 text-xs font-bold uppercase">Supplier</h3>
+                    </div>
+                    {shipment.supplier ? (
+                        <div>
+                            <p className="text-white font-medium">{shipment.supplier.name}</p>
+                            <p className="text-xs text-slate-500">{shipment.supplier.contact || 'No contact info'}</p>
+                        </div>
+                    ) : (
+                        <p className="text-slate-600 text-sm italic">Not Assigned</p>
+                    )}
+                </div>
+
+                <div className="bg-slate-800/50 p-4 rounded-xl border border-white/5 backdrop-blur-md">
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="p-1.5 bg-green-500/20 rounded-lg text-green-400">🌍</span>
+                        <h3 className="text-slate-300 text-xs font-bold uppercase">Importer</h3>
+                    </div>
+                    {shipment.importer ? (
+                        <div>
+                            <p className="text-white font-medium">{shipment.importer.name}</p>
+                            <p className="text-xs text-slate-500">{shipment.importer.contact || 'No contact info'}</p>
+                        </div>
+                    ) : (
+                        <p className="text-slate-600 text-sm italic">Not Assigned</p>
+                    )}
+                </div>
+            </div>
+
             {/* Auto-Tracking Timeline */}
             <TrackingTimeline status={shipment.status} shippingLine={shipment.shippingLine} />
 
