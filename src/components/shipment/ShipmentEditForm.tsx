@@ -119,37 +119,40 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
                         </div>
                     </div>
 
-                    {/* Dates & Notes */}
-                    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
-                        <h3 className="font-semibold text-gray-900 border-b pb-2">التواريخ والملاحظات</h3>
+                </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">ETD (تاريخ المغادرة)</label>
-                            <input name="etd" type="date" defaultValue={shipment.etd ? new Date(shipment.etd).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
-                        </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">ETA (تاريخ الوصول)</label>
-                            <input name="eta" type="date" defaultValue={shipment.eta ? new Date(shipment.eta).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
-                        </div>
+                {/* Dates & Notes */}
+                <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm space-y-4">
+                    <h3 className="font-semibold text-gray-900 border-b pb-2">التواريخ والملاحظات</h3>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Notes (ملاحظات)</label>
-                            <textarea name="notes" rows={4} defaultValue={shipment.notes || ''} className="w-full border p-2.5 rounded-lg"></textarea>
-                        </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">ETD (تاريخ المغادرة)</label>
+                        <input name="etd" type="date" defaultValue={shipment.etd ? new Date(shipment.etd).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">ETA (تاريخ الوصول)</label>
+                        <input name="eta" type="date" defaultValue={shipment.eta ? new Date(shipment.eta).toISOString().split('T')[0] : ''} className="w-full border p-2.5 rounded-lg" />
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Notes (ملاحظات)</label>
+                        <textarea name="notes" rows={4} defaultValue={shipment.notes || ''} className="w-full border p-2.5 rounded-lg"></textarea>
                     </div>
                 </div>
+            </div>
 
-                <div className="flex justify-end pt-4">
-                    <button
-                        type="submit"
-                        disabled={isPending}
-                        className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50"
-                    >
-                        {isPending ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                        <span>حفظ التعديلات</span>
-                    </button>
-                </div>
-        </form>
+            <div className="flex justify-end pt-4">
+                <button
+                    type="submit"
+                    disabled={isPending}
+                    className="bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 shadow-lg shadow-blue-500/20 disabled:opacity-50"
+                >
+                    {isPending ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                    <span>حفظ التعديلات</span>
+                </button>
+            </div>
+        </form >
     )
 }
