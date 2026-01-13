@@ -42,20 +42,7 @@ export default function CreateCompanyPage() {
                             </select>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">الدولة (Country)</label>
-                            <select name="country" className="w-full border p-2 rounded-lg bg-white">
-                                <option value="EG">Egypt (مصر)</option>
-                                <option value="SA">Saudi Arabia (السعودية)</option>
-                                <option value="CN">China (الصين)</option>
-                                <option value="AE">UAE (الإمارات)</option>
-                                <option value="US">USA (أمريكا)</option>
-                                <option value="DE">Germany (ألمانيا)</option>
-                                <option value="TR">Turkey (تركيا)</option>
-                                <option value="IT">Italy (إيطاليا)</option>
-                                <option value="IN">India (الهند)</option>
-                            </select>
-                        </div>
+
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">رقم الواتساب *</label>
