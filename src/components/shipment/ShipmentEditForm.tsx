@@ -100,21 +100,21 @@ export default function ShipmentEditForm({ shipment, companies }: { shipment: an
                             <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Supplier (المورد)</label>
                             <select name="supplierId" defaultValue={shipment.supplierId || ''} className="w-full text-sm border p-2 rounded-lg">
                                 <option value="">-- Select Supplier --</option>
-                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                {companies.filter(c => c.type === 'supplier').map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                         <div>
                             <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Factory (المصنع)</label>
                             <select name="factoryId" defaultValue={shipment.factoryId || ''} className="w-full text-sm border p-2 rounded-lg">
                                 <option value="">-- Select Factory --</option>
-                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                {companies.filter(c => c.type === 'factory').map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                         <div>
                             <label className="block text-xs font-bold text-slate-500 mb-1 uppercase">Importer (المستورد)</label>
                             <select name="importerId" defaultValue={shipment.importerId || ''} className="w-full text-sm border p-2 rounded-lg">
                                 <option value="">-- Select Importer --</option>
-                                {companies.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                                {companies.filter(c => c.type === 'importer').map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                         </div>
                     </div>

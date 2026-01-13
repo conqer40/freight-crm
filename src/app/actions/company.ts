@@ -12,6 +12,8 @@ export async function createCompany(prevState: any, formData: FormData) {
     const contact = formData.get('contact') as string;
     const services = formData.getAll('services');
 
+    const country = formData.get('country') as string;
+
     if (!name || !whatsapp) {
         return { message: 'الاسم ورقم الواتساب حقول إلزامية' };
     }
@@ -24,6 +26,7 @@ export async function createCompany(prevState: any, formData: FormData) {
                 whatsapp,
                 email,
                 contact,
+                country,
                 services: services.join(','),
             }
         });

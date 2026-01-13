@@ -37,6 +37,7 @@ model Company {
   contact   String?  // Contact Person
   routes    String?  // Description of routes
   rating    Int      @default(0)
+  country   String?  // New: Country of the company
   createdAt DateTime @default(now())
   
   rfqs      RFQ[]    @relation("TargetedCompanies") 
