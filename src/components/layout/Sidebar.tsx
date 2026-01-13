@@ -39,7 +39,7 @@ export default function Sidebar() {
                         </div>
                         <div>
                             <h1 className="text-xl font-bold tracking-tight text-white leading-tight">Elhawy<span className="text-blue-400">Freight</span></h1>
-                            <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold opacity-70">Logistics OS</p>
+                            <div className="text-xs text-slate-500 font-mono mt-1">v3.1 (Live Update) 🟢</div>
                         </div>
                     </div>
                 </div>
